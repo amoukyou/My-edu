@@ -3,396 +3,772 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>赴马教育 - 马来西亚留学智能匹配系统</title>
+  <title>赴马教育 - 马来西亚留学智能规划系统</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a56db;
-      --primary-light: #e8effc;
-      --success: #059669;
-      --warning: #d97706;
-      --danger: #dc2626;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-500: #6b7280;
+      --primary: #0f4c8a;
+      --primary-dark: #0a3562;
+      --primary-light: #e6f0fa;
+      --accent: #c8a84e;
+      --accent-light: #faf5e6;
+      --success: #16713a;
+      --success-bg: #e6f5ec;
+      --warning: #b8860b;
+      --warning-bg: #fef8e7;
+      --danger: #b91c1c;
+      --danger-bg: #fde8e8;
+      --gray-50: #f8f9fb;
+      --gray-100: #f1f3f5;
+      --gray-200: #e2e5e9;
+      --gray-300: #cdd1d7;
+      --gray-400: #9da3ae;
+      --gray-500: #6c7280;
+      --gray-600: #4b5563;
       --gray-700: #374151;
+      --gray-800: #1f2937;
       --gray-900: #111827;
-      --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+      --radius: 10px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -2px rgba(0,0,0,.05);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.03);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,.08), 0 8px 10px -6px rgba(0,0,0,.03);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: var(--gray-50);
-      color: var(--gray-900);
-      line-height: 1.6;
+      color: var(--gray-800);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
+
+    /* ===== HEADER ===== */
     .header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #1a56db 50%, #2563eb 100%);
+      background: linear-gradient(160deg, #071e3d 0%, #0f4c8a 40%, #1565b8 70%, #1976d2 100%);
       color: white;
-      padding: 2.5rem 0 3rem;
-      text-align: center;
+      padding: 0;
       position: relative;
       overflow: hidden;
     }
     .header::before {
       content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
-    .header h1 { font-size: 2.2rem; font-weight: 700; position: relative; letter-spacing: 2px; }
-    .header p { opacity: 0.9; margin-top: 0.5rem; font-size: 1.1rem; position: relative; }
-    .header .badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      padding: 0.3rem 1rem;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      margin-top: 0.75rem;
+    .header-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3.5rem;
       position: relative;
-      backdrop-filter: blur(4px);
+      z-index: 1;
     }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
-    .tabs {
+    .brand {
       display: flex;
-      background: white;
-      border-radius: 12px 12px 0 0;
-      margin-top: -1.25rem;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .brand-logo {
+      width: 52px; height: 52px;
+      background: var(--accent);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 800; color: var(--primary-dark);
+      box-shadow: 0 4px 12px rgba(200,168,78,0.3);
+    }
+    .brand-text h1 {
+      font-size: 1.75rem; font-weight: 800; letter-spacing: 1px; line-height: 1.2;
+    }
+    .brand-text p {
+      font-size: 0.85rem; opacity: 0.7; margin-top: 2px; letter-spacing: 0.5px;
+    }
+    .hero-title {
+      font-size: 2.2rem; font-weight: 800; line-height: 1.3;
+      max-width: 600px;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.05rem; opacity: 0.85; margin-top: 0.75rem;
+      max-width: 520px; line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex; flex-direction: column;
+    }
+    .hero-stat .num {
+      font-size: 1.6rem; font-weight: 800; color: var(--accent);
+    }
+    .hero-stat .lbl {
+      font-size: 0.78rem; opacity: 0.7;
+    }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+    .main-wrap {
+      margin-top: -2rem;
       position: relative;
-      box-shadow: var(--shadow);
-      overflow: hidden;
       z-index: 2;
     }
-    .tab {
-      flex: 1;
-      padding: 1rem;
-      text-align: center;
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--gray-500);
-      transition: all 0.2s;
-      border-bottom: 3px solid transparent;
+    .tabs {
+      display: flex; gap: 4px;
+      margin-bottom: 0;
     }
-    .tab:hover { background: var(--gray-50); }
-    .tab.active { color: var(--primary); border-bottom-color: var(--primary); background: var(--primary-light); }
+    .tab {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius) var(--radius) 0 0;
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab:hover { background: rgba(255,255,255,0.9); color: var(--gray-700); }
+    .tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
     .panel {
       display: none;
       background: white;
-      border-radius: 0 0 12px 12px;
-      box-shadow: var(--shadow);
-      padding: 2rem;
-      margin-bottom: 2rem;
+      border-radius: 0 var(--radius) var(--radius) var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
     }
     .panel.active { display: block; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+    /* ===== FORM ===== */
+    .section-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--gray-800);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--gray-100);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .section-title .icon {
+      width: 28px; height: 28px;
+      background: var(--primary-light);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+    .form-section { margin-bottom: 2rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; }
     .form-group.full { grid-column: 1 / -1; }
-    .form-group label { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem; color: var(--gray-700); }
-    .form-group label .req { color: var(--danger); }
+    .form-group label {
+      font-weight: 600; font-size: 0.82rem; margin-bottom: 0.4rem;
+      color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .form-group label .req { color: var(--danger); font-weight: 700; }
+    .form-group .hint {
+      font-size: 0.75rem; color: var(--gray-400); font-weight: 400;
+      text-transform: none; letter-spacing: 0;
+    }
     .form-group input, .form-group select {
-      padding: 0.65rem 0.85rem;
+      padding: 0.7rem 0.9rem;
       border: 1.5px solid var(--gray-200);
       border-radius: 8px;
-      font-size: 0.95rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      font-size: 0.92rem;
+      font-family: inherit;
+      transition: all 0.2s;
       background: white;
+      color: var(--gray-800);
     }
+    .form-group input::placeholder { color: var(--gray-400); }
     .form-group input:focus, .form-group select:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+      box-shadow: 0 0 0 3px rgba(15,76,138,0.08);
     }
-    .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
-    .checkbox-group label {
-      display: flex; align-items: center; gap: 0.35rem;
-      font-weight: 400; font-size: 0.9rem;
-      padding: 0.4rem 0.85rem;
+    .pref-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.5rem; margin-top: 0.25rem;
+    }
+    .pref-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 0.75rem;
       border: 1.5px solid var(--gray-200);
-      border-radius: 20px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
+      font-size: 0.88rem;
       user-select: none;
+      background: white;
     }
-    .checkbox-group label:has(input:checked) {
-      border-color: var(--primary); background: var(--primary-light); color: var(--primary);
+    .pref-item:hover { border-color: var(--gray-300); background: var(--gray-50); }
+    .pref-item:has(input:checked) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
     }
-    .checkbox-group input { display: none; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-      padding: 0.8rem 2.5rem; border: none; border-radius: 8px;
-      font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    .pref-item input { display: none; }
+    .pref-item .pref-icon { font-size: 1rem; }
+    .btn-submit {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; max-width: 380px;
+      margin: 2rem auto 0;
+      padding: 0.9rem 2rem;
+      border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: linear-gradient(135deg, var(--primary) 0%, #1565b8 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(15,76,138,0.25);
     }
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-primary:hover { background: #1e40af; transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-    .form-actions { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 1rem; }
-    #results-area { margin-top: 2rem; }
-    .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
-    .results-header h2 { font-size: 1.3rem; }
-    .gpa-note { font-size: 0.85rem; color: var(--gray-500); }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15,76,138,0.35);
+    }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ===== RESULTS ===== */
+    #results-area { margin-top: 2.5rem; }
+    .results-banner {
+      background: linear-gradient(135deg, var(--primary-light) 0%, #dbeafe 100%);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .results-banner h2 { font-size: 1.25rem; color: var(--primary-dark); }
+    .results-banner .meta { font-size: 0.85rem; color: var(--primary); }
+
     .result-card {
       border: 1.5px solid var(--gray-200);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      transition: all 0.2s;
-      position: relative;
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+      transition: all 0.25s;
     }
-    .result-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); }
-    .rank-badge {
-      position: absolute; top: -1px; left: -1px;
-      background: var(--primary); color: white;
-      font-size: 0.8rem; font-weight: 700;
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px 0 8px 0;
+    .result-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-2px);
     }
-    .rank-badge.gold { background: linear-gradient(135deg, #d97706, #f59e0b); }
-    .rank-badge.silver { background: linear-gradient(135deg, #6b7280, #9ca3af); }
-    .rank-badge.bronze { background: linear-gradient(135deg, #92400e, #b45309); }
-    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
-    .card-top h3 { font-size: 1.15rem; padding-top: 0.25rem; }
-    .uni-en { font-size: 0.8rem; color: var(--gray-500); font-weight: 400; }
-    .tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-    .tag { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .card-header-left {
+      padding: 1.25rem 1.5rem;
+      flex: 1;
+    }
+    .card-rank {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+    .rank-1 { background: linear-gradient(135deg,#fbbf24,#f59e0b); color: #78350f; }
+    .rank-2 { background: linear-gradient(135deg,#d1d5db,#9ca3af); color: #1f2937; }
+    .rank-3 { background: linear-gradient(135deg,#d97706,#b45309); color: white; }
+    .rank-n { background: var(--gray-200); color: var(--gray-600); }
+    .card-uni-name { font-size: 1.2rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; }
+    .card-uni-en { font-size: 0.78rem; color: var(--gray-400); margin-top: 2px; }
+    .card-program { font-size: 0.95rem; color: var(--primary); font-weight: 600; margin-top: 0.4rem; }
+    .card-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .tag {
+      display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.3px;
+    }
     .tag-public { background: #dbeafe; color: #1e40af; }
     .tag-private { background: #fef3c7; color: #92400e; }
     .tag-branch { background: #d1fae5; color: #065f46; }
     .tag-qs { background: #ede9fe; color: #5b21b6; }
-    .tag-city { background: #f3f4f6; color: #374151; }
-    .success-meter { width: 80px; text-align: center; flex-shrink: 0; }
-    .success-meter .circle {
-      width: 64px; height: 64px; border-radius: 50%;
+    .tag-city { background: var(--gray-100); color: var(--gray-600); }
+    .tag-dur { background: #fce7f3; color: #9d174d; }
+
+    .card-header-right {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 1rem 1.5rem;
+      min-width: 120px;
+      border-left: 1px solid var(--gray-100);
+    }
+    .rate-ring {
+      width: 72px; height: 72px;
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; font-weight: 700; margin: 0 auto 0.25rem;
+      flex-direction: column;
     }
-    .success-meter .label { font-size: 0.75rem; color: var(--gray-500); }
-    .rate-high .circle { background: #d1fae5; color: #059669; border: 3px solid #059669; }
-    .rate-mid .circle { background: #fef3c7; color: #d97706; border: 3px solid #d97706; }
-    .rate-low .circle { background: #fee2e2; color: #dc2626; border: 3px solid #dc2626; }
-    .card-details {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.75rem; margin: 0.75rem 0; padding: 0.85rem;
-      background: var(--gray-50); border-radius: 8px;
+    .rate-ring .pct { font-size: 1.3rem; font-weight: 800; line-height: 1; }
+    .rate-ring .pct-label { font-size: 0.6rem; font-weight: 600; margin-top: 2px; }
+    .rate-high { background: var(--success-bg); color: var(--success); border: 3px solid var(--success); }
+    .rate-mid { background: var(--warning-bg); color: var(--warning); border: 3px solid var(--warning); }
+    .rate-low { background: var(--danger-bg); color: var(--danger); border: 3px solid var(--danger); }
+    .rate-label { font-size: 0.72rem; color: var(--gray-400); margin-top: 0.35rem; font-weight: 500; }
+
+    .card-body { padding: 1.25rem 1.5rem; }
+
+    /* 费用表格 */
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
     }
-    .detail-item .dl { font-size: 0.75rem; color: var(--gray-500); }
-    .detail-item .dv { font-size: 0.95rem; font-weight: 600; }
-    .card-reasons { margin-top: 0.75rem; }
-    .reason { display: inline-block; font-size: 0.8rem; padding: 0.2rem 0.55rem; margin: 0.15rem; border-radius: 4px; }
-    .reason-good { background: #d1fae5; color: #065f46; }
-    .reason-warn { background: #fef3c7; color: #92400e; }
-    .card-expand { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-200); }
-    .card-expand.show { display: block; }
-    .timeline { display: flex; gap: 0; margin-top: 0.75rem; }
-    .timeline-step { flex: 1; text-align: center; position: relative; padding: 0.5rem 0.25rem; }
-    .timeline-step::before {
-      content: ''; position: absolute; top: 1.4rem; left: 0; right: 0;
-      height: 3px; background: var(--primary-light);
+    .fee-table th {
+      text-align: left;
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 0.4rem 0.75rem;
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-100);
     }
-    .timeline-step:first-child::before { left: 50%; }
-    .timeline-step:last-child::before { right: 50%; }
-    .timeline-step .dot {
-      width: 12px; height: 12px; background: var(--primary);
-      border-radius: 50%; display: inline-block; position: relative; z-index: 1;
+    .fee-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
     }
-    .timeline-step .step-label { display: block; font-size: 0.72rem; color: var(--gray-500); margin-top: 0.25rem; }
-    .timeline-step .step-time { display: block; font-size: 0.78rem; font-weight: 600; color: var(--gray-700); }
-    .expand-btn {
-      background: none; border: none; color: var(--primary);
-      font-size: 0.85rem; cursor: pointer; margin-top: 0.5rem; padding: 0.25rem 0;
+    .fee-table .fee-val { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .fee-table .fee-rmb { font-size: 0.78rem; color: var(--gray-400); }
+    .fee-table tr.total-row td {
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      border-bottom: none;
     }
-    .expand-btn:hover { text-decoration: underline; }
-    .service-box {
-      margin-top: 1rem; padding: 0.85rem; background: var(--primary-light);
-      border-radius: 8px; font-size: 0.85rem;
+    .fee-table tr.total-row .fee-val { font-size: 1rem; }
+
+    /* 录取要求 */
+    .req-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem; margin-bottom: 1rem;
     }
-    /* 大学总览表格 */
-    .uni-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
-    .uni-card {
-      border: 1.5px solid var(--gray-200); border-radius: 10px; padding: 1.25rem;
+    .req-item {
+      padding: 0.75rem;
+      background: var(--gray-50);
+      border-radius: 8px;
+      border: 1px solid var(--gray-100);
+    }
+    .req-item .req-label { font-size: 0.72rem; color: var(--gray-400); font-weight: 600; text-transform: uppercase; }
+    .req-item .req-value { font-size: 1rem; font-weight: 700; color: var(--gray-800); margin-top: 2px; }
+    .req-item .req-note { font-size: 0.75rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* 匹配分析 */
+    .analysis { margin-bottom: 1rem; }
+    .analysis-title { font-size: 0.8rem; font-weight: 700; color: var(--gray-600); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.3px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      font-size: 0.8rem; padding: 0.25rem 0.6rem; margin: 0.15rem;
+      border-radius: 5px; font-weight: 500;
+    }
+    .pill-good { background: var(--success-bg); color: var(--success); }
+    .pill-warn { background: var(--warning-bg); color: var(--warning); }
+
+    /* 展开详情 */
+    .card-expand-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      width: 100%;
+      padding: 0.6rem;
+      border: none; border-top: 1px solid var(--gray-100);
+      background: var(--gray-50);
+      color: var(--primary);
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .card-expand-btn:hover { background: var(--primary-light); }
+    .card-detail { display: none; padding: 1.5rem; background: var(--gray-50); border-top: 1px solid var(--gray-100); }
+    .card-detail.show { display: block; }
+
+    /* 时间规划 */
+    .plan-section { margin-bottom: 1.5rem; }
+    .plan-section h4 {
+      font-size: 0.85rem; font-weight: 700; color: var(--gray-700);
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .timeline-pro {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline-pro::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 4px; bottom: 4px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 1px;
+    }
+    .tl-step {
+      position: relative;
+      padding: 0.5rem 0 0.75rem 1rem;
+    }
+    .tl-step::before {
+      content: '';
+      position: absolute;
+      left: -1.95rem; top: 0.7rem;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: white;
+      border: 2.5px solid var(--primary);
+    }
+    .tl-step:last-child::before { border-color: var(--accent); background: var(--accent); }
+    .tl-step .tl-time {
+      font-size: 0.75rem; font-weight: 700; color: var(--primary);
+      text-transform: uppercase;
+    }
+    .tl-step .tl-title { font-size: 0.9rem; font-weight: 600; color: var(--gray-800); }
+    .tl-step .tl-desc { font-size: 0.8rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* 入学日历 */
+    .intake-calendar {
+      display: flex; gap: 0; border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .intake-month {
+      flex: 1; text-align: center; padding: 0.5rem 0.25rem;
+      font-size: 0.7rem; font-weight: 600; color: var(--gray-400);
+      border-right: 1px solid var(--gray-100);
+      background: white;
       transition: all 0.2s;
     }
-    .uni-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); }
-    .uni-card h3 { font-size: 1.05rem; margin-bottom: 0.15rem; }
-    .uni-card .en { font-size: 0.8rem; color: var(--gray-500); margin-bottom: 0.6rem; }
-    .uni-card .info-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.2rem 0; }
-    .uni-card .info-row .lbl { color: var(--gray-500); }
-    .uni-card .strengths { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    .uni-card .strengths span { font-size: 0.75rem; background: var(--gray-100); padding: 0.15rem 0.45rem; border-radius: 3px; }
-    .uni-card .desc { font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem; line-height: 1.5; }
-    .footer { text-align: center; padding: 1.5rem; color: var(--gray-500); font-size: 0.85rem; }
-    @media (max-width: 640px) {
+    .intake-month:last-child { border-right: none; }
+    .intake-month.active {
+      background: var(--primary);
+      color: white;
+    }
+    .intake-month.recommended {
+      background: var(--accent);
+      color: var(--primary-dark);
+    }
+    .intake-month .mo-label { display: block; font-size: 0.65rem; font-weight: 400; opacity: 0.7; }
+
+    /* 服务清单 */
+    .service-list {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+    }
+    .service-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; color: var(--gray-600);
+      padding: 0.3rem 0;
+    }
+    .service-check {
+      width: 16px; height: 16px;
+      background: var(--success-bg);
+      color: var(--success);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ===== 大学总览 ===== */
+    .uni-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
+    .uni-card {
+      border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+      overflow: hidden; transition: all 0.25s; background: white;
+    }
+    .uni-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .uni-card-head {
+      padding: 1.25rem 1.25rem 0.75rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .uni-card h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+    .uni-card .en { font-size: 0.75rem; color: var(--gray-400); margin-top: 2px; }
+    .uni-card-body { padding: 0 1.25rem 1.25rem; }
+    .uni-info-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.35rem 0; font-size: 0.85rem;
+      border-bottom: 1px dashed var(--gray-100);
+    }
+    .uni-info-row:last-child { border-bottom: none; }
+    .uni-info-row .lbl { color: var(--gray-400); font-size: 0.8rem; }
+    .uni-info-row .val { font-weight: 600; color: var(--gray-700); }
+    .uni-strengths { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.6rem; }
+    .uni-strengths span {
+      font-size: 0.72rem; padding: 0.15rem 0.45rem;
+      background: var(--primary-light); color: var(--primary);
+      border-radius: 3px; font-weight: 500;
+    }
+    .uni-desc {
+      font-size: 0.8rem; color: var(--gray-500); margin-top: 0.6rem; line-height: 1.55;
+      padding-top: 0.6rem; border-top: 1px solid var(--gray-100);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--gray-900);
+      color: var(--gray-400);
+      padding: 2rem 0;
+    }
+    .footer-inner {
+      max-width: 1140px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+      font-size: 0.82rem;
+    }
+    .footer-brand { color: white; font-weight: 700; font-size: 1rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: var(--gray-400); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-inner { padding: 1.5rem 1rem 2.5rem; }
+      .hero-title { font-size: 1.5rem; }
+      .hero-stats { gap: 1.5rem; }
       .form-grid { grid-template-columns: 1fr; }
-      .header h1 { font-size: 1.5rem; }
-      .card-top { flex-direction: column; gap: 0.5rem; }
-      .card-details { grid-template-columns: 1fr 1fr; }
-      .tabs { font-size: 0.85rem; }
-      .tab { padding: 0.75rem 0.5rem; font-size: 0.85rem; }
-      .timeline { flex-direction: column; gap: 0.25rem; }
-      .timeline-step::before { display: none; }
-      .uni-cards { grid-template-columns: 1fr; }
+      .form-grid-2 { grid-template-columns: 1fr; }
+      .panel { padding: 1.5rem 1rem; }
+      .card-header { flex-direction: column; }
+      .card-header-right { flex-direction: row; border-left: none; border-top: 1px solid var(--gray-100); padding: 0.75rem 1.5rem; gap: 0.75rem; }
+      .fee-table { font-size: 0.82rem; }
+      .fee-table th, .fee-table td { padding: 0.4rem 0.5rem; }
+      .req-grid { grid-template-columns: 1fr 1fr; }
+      .service-list { grid-template-columns: 1fr; }
+      .pref-grid { grid-template-columns: 1fr 1fr; }
+      .uni-grid { grid-template-columns: 1fr; }
+      .intake-month { font-size: 0.6rem; padding: 0.35rem 0.15rem; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .tab { padding: 0.6rem 1rem; font-size: 0.82rem; }
     }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="container">
-    <h1>赴马教育</h1>
-    <p>马来西亚留学智能匹配系统</p>
-    <span class="badge">覆盖 15 所优质大学 &middot; 智能匹配 &middot; 成功率评估 &middot; 全程报价</span>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">FM</div>
+      <div class="brand-text">
+        <h1>赴马教育</h1>
+        <p>FUMA EDUCATION SDN BHD</p>
+      </div>
+    </div>
+    <div class="hero-title">为您定制<span>最优</span>的<br>马来西亚留学方案</div>
+    <p class="hero-sub">基于学术背景、语言能力、预算偏好与职业规划，智能匹配最适合您的大学与专业，提供详细的费用明细、入学时间与申请规划。</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">15+</span><span class="lbl">合作院校</span></div>
+      <div class="hero-stat"><span class="num">60+</span><span class="lbl">热门专业</span></div>
+      <div class="hero-stat"><span class="num">98%</span><span class="lbl">签证通过率</span></div>
+      <div class="hero-stat"><span class="num">7年</span><span class="lbl">行业经验</span></div>
+    </div>
   </div>
 </div>
 
 <div class="container">
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('match')">智能匹配</button>
-    <button class="tab" onclick="switchTab('universities')">大学总览</button>
-  </div>
+  <div class="main-wrap">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('match')">智能择校匹配</button>
+      <button class="tab" onclick="switchTab('universities')">合作院校总览</button>
+    </div>
 
-  <!-- 智能匹配 -->
-  <div class="panel active" id="panel-match">
-    <form id="matchForm" onsubmit="handleMatch(event)">
-      <div class="form-grid">
-        <div class="form-group">
-          <label>姓名 <span class="req">*</span></label>
-          <input type="text" name="name" required placeholder="请输入您的姓名">
-        </div>
-        <div class="form-group">
-          <label>手机号 / 微信</label>
-          <input type="text" name="contact" placeholder="方便顾问联系您">
-        </div>
-        <div class="form-group">
-          <label>当前学历 <span class="req">*</span></label>
-          <select name="education" required>
-            <option value="">请选择</option>
-            <option value="高中">高中 / 中专</option>
-            <option value="大专">大专</option>
-            <option value="本科">本科</option>
-            <option value="硕士">硕士</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>GPA / 均分 <span class="req">*</span></label>
-          <input type="number" name="gpa" required step="0.01" min="0" max="100"
-            placeholder="4.0制或百分制均可（如 3.5 或 85）">
-        </div>
-        <div class="form-group">
-          <label>雅思成绩（没有填 0）</label>
-          <input type="number" name="ielts" step="0.5" min="0" max="9" value="0" placeholder="如 6.0">
-        </div>
-        <div class="form-group">
-          <label>申请层次 <span class="req">*</span></label>
-          <select name="targetLevel" required>
-            <option value="">请选择</option>
-            <option value="bachelor">本科</option>
-            <option value="master">硕士</option>
-            <option value="phd">博士</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>意向专业方向</label>
-          <select name="targetMajor">
-            <option value="不限">不限 / 都可以</option>
-            <option value="商科">商科 / 管理 / 金融</option>
-            <option value="计算机">计算机 / IT / 软件</option>
-            <option value="工程">工程 / 理工</option>
-            <option value="教育">教育</option>
-            <option value="医学">医学 / 护理 / 药学</option>
-            <option value="传媒">传媒 / 新闻</option>
-            <option value="艺术设计">艺术 / 设计 / 音乐</option>
-            <option value="社科">社科 / 心理学</option>
-            <option value="理科">理科 / 农业 / 环境</option>
-            <option value="酒店旅游">酒店 / 旅游管理</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>总预算（人民币，不填则不限）</label>
-          <input type="number" name="budget" min="0" step="10000" placeholder="含学费+生活费+服务费，如 200000">
-        </div>
-        <div class="form-group full">
-          <label>留学偏好（可多选）</label>
-          <div class="checkbox-group">
-            <label><input type="checkbox" name="pref" value="排名优先">排名优先</label>
-            <label><input type="checkbox" name="pref" value="性价比">性价比高</label>
-            <label><input type="checkbox" name="pref" value="就业导向">就业导向</label>
-            <label><input type="checkbox" name="pref" value="学位认可">学位国际认可</label>
-            <label><input type="checkbox" name="pref" value="城市生活">首都吉隆坡</label>
+    <!-- ===== 智能匹配 ===== -->
+    <div class="panel active" id="panel-match">
+      <form id="matchForm" onsubmit="handleMatch(event)">
+
+        <div class="form-section">
+          <div class="section-title">
+            <span class="icon">01</span> 基本信息
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>姓名 <span class="req">*</span></label>
+              <input type="text" name="name" required placeholder="学生姓名">
+            </div>
+            <div class="form-group">
+              <label>联系电话</label>
+              <input type="tel" name="phone" placeholder="方便顾问回访">
+            </div>
+            <div class="form-group">
+              <label>微信号</label>
+              <input type="text" name="wechat" placeholder="微信沟通更便捷">
+            </div>
           </div>
         </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">开始智能匹配</button>
-        </div>
-      </div>
-    </form>
-    <div id="results-area"></div>
-  </div>
 
-  <!-- 大学总览 -->
-  <div class="panel" id="panel-universities">
-    <div id="uni-list"></div>
+        <div class="form-section">
+          <div class="section-title">
+            <span class="icon">02</span> 学术背景
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>当前学历 <span class="req">*</span></label>
+              <select name="education" required>
+                <option value="">请选择当前最高学历</option>
+                <option value="高中">高中 / 中专 / 职高</option>
+                <option value="大专">大专</option>
+                <option value="本科在读">本科在读</option>
+                <option value="本科毕业">本科毕业</option>
+                <option value="硕士">硕士</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>GPA / 均分 <span class="req">*</span> <span class="hint">（4.0制或百分制均可）</span></label>
+              <input type="number" name="gpa" required step="0.01" min="0" max="100" placeholder="如 3.5 或 85">
+            </div>
+            <div class="form-group">
+              <label>雅思/托福成绩 <span class="hint">（没有填 0，可后补）</span></label>
+              <input type="number" name="ielts" step="0.5" min="0" max="9" value="0" placeholder="雅思总分，如 6.0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">
+            <span class="icon">03</span> 留学意向
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>申请层次 <span class="req">*</span></label>
+              <select name="targetLevel" required>
+                <option value="">请选择目标学位</option>
+                <option value="bachelor">本科 Bachelor</option>
+                <option value="master">硕士 Master</option>
+                <option value="phd">博士 PhD</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>意向专业方向</label>
+              <select name="targetMajor">
+                <option value="不限">不限 / 希望获得建议</option>
+                <option value="商科">商科 / 管理 / 金融 / 会计</option>
+                <option value="计算机">计算机 / IT / 软件工程</option>
+                <option value="工程">工程 / 机械 / 电气</option>
+                <option value="教育">教育 / 对外汉语</option>
+                <option value="医学">医学 / 护理 / 药学</option>
+                <option value="传媒">传媒 / 新闻 / 广告</option>
+                <option value="艺术设计">艺术 / 设计 / 音乐 / 动画</option>
+                <option value="社科">社科 / 心理学 / 法学</option>
+                <option value="理科">理科 / 农业 / 环境科学</option>
+                <option value="酒店旅游">酒店管理 / 旅游管理</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>总预算 (人民币) <span class="hint">（含学费+生活费+服务费）</span></label>
+              <input type="number" name="budget" min="0" step="10000" placeholder="如 200000，不填则不限预算">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">
+            <span class="icon">04</span> 个人偏好
+          </div>
+          <div class="pref-grid">
+            <label class="pref-item"><input type="checkbox" name="pref" value="排名优先"><span class="pref-icon">🏆</span> QS排名优先</label>
+            <label class="pref-item"><input type="checkbox" name="pref" value="性价比"><span class="pref-icon">💰</span> 高性价比</label>
+            <label class="pref-item"><input type="checkbox" name="pref" value="就业导向"><span class="pref-icon">💼</span> 就业导向</label>
+            <label class="pref-item"><input type="checkbox" name="pref" value="学位认可"><span class="pref-icon">🎓</span> 国际学位认可</label>
+            <label class="pref-item"><input type="checkbox" name="pref" value="城市生活"><span class="pref-icon">🏙️</span> 首都吉隆坡</label>
+            <label class="pref-item"><input type="checkbox" name="pref" value="快速入学"><span class="pref-icon">⚡</span> 尽快入学</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">生成专属留学方案</button>
+      </form>
+
+      <div id="results-area"></div>
+    </div>
+
+    <!-- ===== 大学总览 ===== -->
+    <div class="panel" id="panel-universities">
+      <div id="uni-list"></div>
+    </div>
   </div>
 </div>
 
 <div class="footer">
-  &copy; 2026 赴马教育 &middot; 马来西亚留学专业服务 &middot; 微信咨询: 赴马教育
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">赴马教育 FUMA EDUCATION</div>
+      <div style="margin-top:0.3rem">专注马来西亚留学，为中国学生提供一站式申请服务</div>
+    </div>
+    <div class="footer-links">
+      <a href="#">关于我们</a>
+      <a href="#">服务项目</a>
+      <a href="#">成功案例</a>
+      <a href="#">联系我们</a>
+    </div>
+  </div>
 </div>
 
 <script>
-// ====== 大学 & 专业数据库 (全部内嵌前端) ======
+// ====== 汇率 ======
+const MYR_TO_RMB = 1.62;
+function fmtMYR(rmb) {
+  const myr = Math.round(rmb / MYR_TO_RMB);
+  return 'RM ' + myr.toLocaleString();
+}
+function fmtRMB(rmb) {
+  return '≈ ¥' + rmb.toLocaleString();
+}
+
+// ====== 大学数据库 ======
 const universities = [
   {
-    id:1, name:'马来亚大学', name_en:'University of Malaya', type:'public', qs:60, city:'吉隆坡',
+    id:1, name:'马来亚大学', en:'University of Malaya (UM)', type:'public', qs:60, city:'吉隆坡',
     strengths:['商科','工程','医学','计算机','教育','法学'], min_gpa:3.0, ielts_min:5.5,
     tuition_min:15000, tuition_max:35000, living_cost:30000, apply_months:4,
-    intake:['2月','9月'], service_fee:12000,
-    desc:'QS世界排名前100，马来西亚排名第一的综合性公立大学，学术声誉极高',
+    intake:[2,9], service_fee:12000,
+    desc:'马来西亚历史最悠久的大学，QS世界排名前100，综合实力全马第一。中国教育部认证，回国学历认可。',
     programs:[
-      {name:'工商管理学士',level:'bachelor',cat:'商科',dur:3.5,fee:80000,gpa:3.0,ielts:5.5},
+      {name:'工商管理学士 (BBA)',level:'bachelor',cat:'商科',dur:3.5,fee:80000,gpa:3.0,ielts:5.5},
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:4,fee:90000,gpa:3.0,ielts:5.5},
-      {name:'工商管理硕士(MBA)',level:'master',cat:'商科',dur:1.5,fee:65000,gpa:3.0,ielts:6.0},
+      {name:'土木工程学士',level:'bachelor',cat:'工程',dur:4,fee:85000,gpa:3.0,ielts:5.5,special:'需高中数学/物理成绩优良'},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:65000,gpa:3.0,ielts:6.0},
       {name:'计算机科学硕士',level:'master',cat:'计算机',dur:2,fee:55000,gpa:3.0,ielts:6.0},
       {name:'教育学硕士',level:'master',cat:'教育',dur:1.5,fee:40000,gpa:3.0,ielts:6.0},
-      {name:'土木工程学士',level:'bachelor',cat:'工程',dur:4,fee:85000,gpa:3.0,ielts:5.5,special:'需数学基础'},
     ]
   },
   {
-    id:2, name:'博特拉大学', name_en:'Universiti Putra Malaysia', type:'public', qs:123, city:'雪兰莪',
+    id:2, name:'博特拉大学', en:'Universiti Putra Malaysia (UPM)', type:'public', qs:123, city:'雪兰莪',
     strengths:['农业','商科','工程','环境科学','食品科学'], min_gpa:2.8, ielts_min:5.5,
     tuition_min:12000, tuition_max:28000, living_cost:25000, apply_months:3,
-    intake:['2月','9月'], service_fee:10000,
-    desc:'QS世界前150，农业和食品科学领域东南亚领先，校园环境优美',
+    intake:[2,9], service_fee:10000,
+    desc:'QS世界前150，农业与林业专业全球顶尖，校园占地超1200英亩，环境优美。',
     programs:[
       {name:'农业科学学士',level:'bachelor',cat:'理科',dur:4,fee:60000,gpa:2.8,ielts:5.5},
       {name:'工商管理学士',level:'bachelor',cat:'商科',dur:3.5,fee:65000,gpa:2.8,ielts:5.5},
-      {name:'食品科学硕士',level:'master',cat:'理科',dur:2,fee:45000,gpa:3.0,ielts:6.0},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:55000,gpa:3.0,ielts:6.0},
+      {name:'食品科学与技术硕士',level:'master',cat:'理科',dur:2,fee:45000,gpa:3.0,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:55000,gpa:3.0,ielts:6.0},
       {name:'环境科学硕士',level:'master',cat:'理科',dur:2,fee:40000,gpa:3.0,ielts:6.0},
     ]
   },
   {
-    id:3, name:'国民大学', name_en:'Universiti Kebangsaan Malaysia', type:'public', qs:138, city:'雪兰莪',
+    id:3, name:'国民大学', en:'Universiti Kebangsaan Malaysia (UKM)', type:'public', qs:138, city:'雪兰莪',
     strengths:['医学','工程','社会科学','商科','教育'], min_gpa:2.8, ielts_min:5.5,
     tuition_min:12000, tuition_max:30000, living_cost:25000, apply_months:3,
-    intake:['2月','9月'], service_fee:10000,
-    desc:'QS世界前150，马来西亚国民教育标杆，医学和社会科学实力强',
+    intake:[2,9], service_fee:10000,
+    desc:'马来西亚国民教育标杆，医学院和社科院实力突出，研究型综合大学。',
     programs:[
       {name:'商业管理学士',level:'bachelor',cat:'商科',dur:3.5,fee:68000,gpa:2.8,ielts:5.5},
-      {name:'电气工程学士',level:'bachelor',cat:'工程',dur:4,fee:80000,gpa:3.0,ielts:5.5,special:'需数学物理基础'},
+      {name:'电气电子工程学士',level:'bachelor',cat:'工程',dur:4,fee:80000,gpa:3.0,ielts:5.5,special:'需数学/物理成绩优良'},
       {name:'教育学硕士',level:'master',cat:'教育',dur:2,fee:42000,gpa:3.0,ielts:6.0},
       {name:'工商管理硕士',level:'master',cat:'商科',dur:1.5,fee:58000,gpa:3.0,ielts:6.0},
     ]
   },
   {
-    id:4, name:'理科大学', name_en:'Universiti Sains Malaysia', type:'public', qs:137, city:'槟城',
+    id:4, name:'理科大学', en:'Universiti Sains Malaysia (USM)', type:'public', qs:137, city:'槟城',
     strengths:['理科','工程','医学','药学','建筑'], min_gpa:2.8, ielts_min:5.5,
     tuition_min:12000, tuition_max:30000, living_cost:22000, apply_months:3,
-    intake:['2月','9月'], service_fee:10000,
-    desc:'QS世界前150，APEX大学(顶尖大学)称号，理工科实力雄厚',
+    intake:[2,9], service_fee:10000,
+    desc:'马来西亚唯一的APEX(顶尖大学)称号持有者，理工科实力极强，位于美食之都槟城。',
     programs:[
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:4,fee:72000,gpa:2.8,ielts:5.5},
       {name:'建筑学学士',level:'bachelor',cat:'艺术设计',dur:4,fee:85000,gpa:3.0,ielts:5.5,special:'需作品集'},
@@ -401,160 +777,160 @@ const universities = [
     ]
   },
   {
-    id:5, name:'理工大学', name_en:'Universiti Teknologi Malaysia', type:'public', qs:181, city:'柔佛',
+    id:5, name:'理工大学', en:'Universiti Teknologi Malaysia (UTM)', type:'public', qs:181, city:'柔佛',
     strengths:['工程','计算机','建筑','商科','理科'], min_gpa:2.8, ielts_min:5.5,
     tuition_min:10000, tuition_max:25000, living_cost:22000, apply_months:3,
-    intake:['2月','9月'], service_fee:10000,
-    desc:'QS世界前200，马来西亚顶级理工大学，工程和计算机实力强劲',
+    intake:[2,9], service_fee:10000,
+    desc:'马来西亚顶尖理工大学，工程与计算机学科享有盛誉，毗邻新加坡新山。',
     programs:[
-      {name:'机械工程学士',level:'bachelor',cat:'工程',dur:4,fee:70000,gpa:2.8,ielts:5.5,special:'需数学物理基础'},
+      {name:'机械工程学士',level:'bachelor',cat:'工程',dur:4,fee:70000,gpa:2.8,ielts:5.5,special:'需数学/物理成绩优良'},
       {name:'软件工程学士',level:'bachelor',cat:'计算机',dur:4,fee:72000,gpa:2.8,ielts:5.5},
-      {name:'工商管理硕士',level:'master',cat:'商科',dur:1.5,fee:50000,gpa:3.0,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:50000,gpa:3.0,ielts:6.0},
       {name:'计算机科学硕士',level:'master',cat:'计算机',dur:2,fee:48000,gpa:3.0,ielts:6.0},
     ]
   },
   {
-    id:6, name:'泰莱大学', name_en:"Taylor's University", type:'private', qs:251, city:'吉隆坡',
+    id:6, name:'泰莱大学', en:"Taylor's University", type:'private', qs:251, city:'吉隆坡',
     strengths:['酒店管理','商科','设计','传媒','计算机'], min_gpa:2.5, ielts_min:5.0,
     tuition_min:30000, tuition_max:55000, living_cost:35000, apply_months:2,
-    intake:['1月','3月','8月'], service_fee:15000,
-    desc:'QS世界前300，酒店管理专业亚洲第一，私立大学排名马来西亚第一',
+    intake:[1,3,8], service_fee:15000,
+    desc:'私立大学全马排名第一，酒店管理专业亚洲第一、世界第十七，一年三次入学机会。',
     programs:[
-      {name:'酒店管理学士',level:'bachelor',cat:'酒店旅游',dur:3,fee:135000,gpa:2.5,ielts:5.0},
+      {name:'国际酒店管理学士',level:'bachelor',cat:'酒店旅游',dur:3,fee:135000,gpa:2.5,ielts:5.0},
       {name:'工商管理学士',level:'bachelor',cat:'商科',dur:3,fee:120000,gpa:2.5,ielts:5.0},
       {name:'大众传媒学士',level:'bachelor',cat:'传媒',dur:3,fee:110000,gpa:2.5,ielts:5.0},
-      {name:'设计学学士',level:'bachelor',cat:'艺术设计',dur:3,fee:125000,gpa:2.5,ielts:5.0,special:'需作品集'},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:90000,gpa:2.5,ielts:6.0},
+      {name:'设计学学士(视觉传达)',level:'bachelor',cat:'艺术设计',dur:3,fee:125000,gpa:2.5,ielts:5.0,special:'需作品集'},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:90000,gpa:2.5,ielts:6.0},
       {name:'计算机科学硕士',level:'master',cat:'计算机',dur:1.5,fee:80000,gpa:2.5,ielts:6.0},
     ]
   },
   {
-    id:7, name:'思特雅大学', name_en:'UCSI University', type:'private', qs:284, city:'吉隆坡',
+    id:7, name:'思特雅大学', en:'UCSI University', type:'private', qs:284, city:'吉隆坡',
     strengths:['音乐','商科','工程','医学','计算机'], min_gpa:2.5, ielts_min:5.0,
     tuition_min:25000, tuition_max:50000, living_cost:30000, apply_months:2,
-    intake:['1月','5月','9月'], service_fee:13000,
-    desc:'QS世界前300，音乐专业全马第一，综合性强的私立大学',
+    intake:[1,5,9], service_fee:13000,
+    desc:'音乐专业全马第一，QS世界前300，医学和工程专业也具有较强竞争力。',
     programs:[
-      {name:'音乐表演学士',level:'bachelor',cat:'艺术设计',dur:3,fee:130000,gpa:2.5,ielts:5.0,special:'需面试/试演'},
+      {name:'古典/现代音乐学士',level:'bachelor',cat:'艺术设计',dur:3,fee:130000,gpa:2.5,ielts:5.0,special:'需通过音乐面试/试演'},
       {name:'工商管理学士',level:'bachelor',cat:'商科',dur:3,fee:100000,gpa:2.5,ielts:5.0},
       {name:'电气工程学士',level:'bachelor',cat:'工程',dur:4,fee:110000,gpa:2.5,ielts:5.5},
-      {name:'MBA',level:'master',cat:'商科',dur:1,fee:70000,gpa:2.5,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1,fee:70000,gpa:2.5,ielts:6.0},
       {name:'计算机科学硕士',level:'master',cat:'计算机',dur:1.5,fee:68000,gpa:2.5,ielts:6.0},
     ]
   },
   {
-    id:8, name:'英迪大学', name_en:'INTI International University', type:'private', qs:0, city:'森美兰',
+    id:8, name:'英迪大学', en:'INTI International University', type:'private', qs:0, city:'森美兰',
     strengths:['商科','计算机','工程','传媒','设计'], min_gpa:2.3, ielts_min:5.0,
     tuition_min:20000, tuition_max:40000, living_cost:25000, apply_months:2,
-    intake:['1月','5月','8月'], service_fee:12000,
-    desc:'与多所欧美名校合作双学位项目，性价比高的私立大学',
+    intake:[1,5,8], service_fee:12000,
+    desc:'劳瑞德国际大学联盟成员，与300+跨国企业合作实习项目，双学位通道对接欧美名校。',
     programs:[
-      {name:'会计学学士',level:'bachelor',cat:'商科',dur:3,fee:85000,gpa:2.3,ielts:5.0},
+      {name:'会计学学士 (ACCA方向)',level:'bachelor',cat:'商科',dur:3,fee:85000,gpa:2.3,ielts:5.0},
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:3,fee:80000,gpa:2.3,ielts:5.0},
       {name:'大众传媒学士',level:'bachelor',cat:'传媒',dur:3,fee:78000,gpa:2.3,ielts:5.0},
-      {name:'MBA',level:'master',cat:'商科',dur:1,fee:55000,gpa:2.5,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1,fee:55000,gpa:2.5,ielts:6.0},
     ]
   },
   {
-    id:9, name:'亚太科技大学', name_en:'Asia Pacific University (APU)', type:'private', qs:0, city:'吉隆坡',
-    strengths:['计算机','商科','设计','工程','游戏开发'], min_gpa:2.3, ielts_min:5.0,
+    id:9, name:'亚太科技大学', en:'Asia Pacific University (APU)', type:'private', qs:0, city:'吉隆坡',
+    strengths:['计算机','商科','设计','游戏开发','网络安全'], min_gpa:2.3, ielts_min:5.0,
     tuition_min:22000, tuition_max:42000, living_cost:30000, apply_months:2,
-    intake:['1月','3月','5月','9月','11月'], service_fee:12000,
-    desc:'马来西亚IT专业最强私立大学，毕业生就业率高达99%',
+    intake:[1,3,5,9,11], service_fee:12000,
+    desc:'马来西亚IT类专业最强私立大学，毕业生就业率99%，一年五次入学，灵活入读。',
     programs:[
       {name:'软件工程学士',level:'bachelor',cat:'计算机',dur:3,fee:90000,gpa:2.3,ielts:5.0},
       {name:'游戏开发学士',level:'bachelor',cat:'计算机',dur:3,fee:92000,gpa:2.3,ielts:5.0},
       {name:'网络安全学士',level:'bachelor',cat:'计算机',dur:3,fee:88000,gpa:2.3,ielts:5.0},
       {name:'工商管理学士',level:'bachelor',cat:'商科',dur:3,fee:80000,gpa:2.3,ielts:5.0},
-      {name:'数字媒体硕士',level:'master',cat:'传媒',dur:1.5,fee:60000,gpa:2.5,ielts:6.0},
+      {name:'数字媒体技术硕士',level:'master',cat:'传媒',dur:1.5,fee:60000,gpa:2.5,ielts:6.0},
     ]
   },
   {
-    id:10, name:'双威大学', name_en:'Sunway University', type:'private', qs:0, city:'吉隆坡',
+    id:10, name:'双威大学', en:'Sunway University', type:'private', qs:0, city:'吉隆坡',
     strengths:['商科','计算机','传媒','心理学','设计'], min_gpa:2.5, ielts_min:5.5,
     tuition_min:28000, tuition_max:50000, living_cost:32000, apply_months:2,
-    intake:['1月','3月','8月'], service_fee:14000,
-    desc:'与兰卡斯特大学合作双学位，校园设施一流',
+    intake:[1,3,8], service_fee:14000,
+    desc:'与英国兰卡斯特大学深度合作，部分专业可获双学位，坐落于双威城综合体。',
     programs:[
       {name:'会计与金融学士',level:'bachelor',cat:'商科',dur:3,fee:120000,gpa:2.5,ielts:5.5},
       {name:'心理学学士',level:'bachelor',cat:'社科',dur:3,fee:100000,gpa:2.5,ielts:5.5},
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:3,fee:105000,gpa:2.5,ielts:5.5},
       {name:'传媒学学士',level:'bachelor',cat:'传媒',dur:3,fee:98000,gpa:2.5,ielts:5.5},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:85000,gpa:2.5,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:85000,gpa:2.5,ielts:6.0},
     ]
   },
   {
-    id:11, name:'诺丁汉大学马来西亚分校', name_en:'University of Nottingham Malaysia', type:'foreign_branch', qs:100, city:'雪兰莪',
+    id:11, name:'诺丁汉大学马来西亚分校', en:'University of Nottingham Malaysia', type:'foreign_branch', qs:100, city:'雪兰莪',
     strengths:['工程','商科','理科','社科','计算机'], min_gpa:3.0, ielts_min:6.0,
     tuition_min:45000, tuition_max:70000, living_cost:35000, apply_months:3,
-    intake:['2月','9月'], service_fee:15000,
-    desc:'英国诺丁汉大学海外分校，毕业获英国本校同等学位',
+    intake:[2,9], service_fee:15000,
+    desc:'英国罗素集团成员诺丁汉大学马来分校，毕业颁发英国本校同等学位证书，全球认可。',
     programs:[
       {name:'商业管理学士',level:'bachelor',cat:'商科',dur:3,fee:160000,gpa:3.0,ielts:6.0},
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:3,fee:175000,gpa:3.0,ielts:6.0},
-      {name:'化学工程学士',level:'bachelor',cat:'工程',dur:4,fee:200000,gpa:3.0,ielts:6.0,special:'需数学化学基础'},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:120000,gpa:3.0,ielts:6.5},
+      {name:'化学工程学士',level:'bachelor',cat:'工程',dur:4,fee:200000,gpa:3.0,ielts:6.0,special:'需数学/化学成绩优良'},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:120000,gpa:3.0,ielts:6.5},
       {name:'教育学硕士',level:'master',cat:'教育',dur:1,fee:80000,gpa:3.0,ielts:6.5},
     ]
   },
   {
-    id:12, name:'莫纳什大学马来西亚分校', name_en:'Monash University Malaysia', type:'foreign_branch', qs:37, city:'雪兰莪',
+    id:12, name:'莫纳什大学马来西亚分校', en:'Monash University Malaysia', type:'foreign_branch', qs:37, city:'雪兰莪',
     strengths:['商科','工程','理科','医学','传媒'], min_gpa:3.0, ielts_min:6.0,
     tuition_min:50000, tuition_max:80000, living_cost:35000, apply_months:3,
-    intake:['2月','7月','10月'], service_fee:15000,
-    desc:'澳洲八大名校莫纳什大学分校，QS全球前50，学位含金量极高',
+    intake:[2,7,10], service_fee:15000,
+    desc:'澳洲八大名校之一的马来分校，QS全球第37位，学位与墨尔本本校完全一致，学费仅为本校1/3。',
     programs:[
       {name:'商业学士',level:'bachelor',cat:'商科',dur:3,fee:180000,gpa:3.0,ielts:6.0},
-      {name:'工程学士',level:'bachelor',cat:'工程',dur:4,fee:220000,gpa:3.0,ielts:6.0,special:'需数学物理基础'},
+      {name:'工程学士(荣誉)',level:'bachelor',cat:'工程',dur:4,fee:220000,gpa:3.0,ielts:6.0,special:'需数学/物理成绩优良'},
       {name:'计算机科学学士',level:'bachelor',cat:'计算机',dur:3,fee:185000,gpa:3.0,ielts:6.0},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:130000,gpa:3.0,ielts:6.5},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:130000,gpa:3.0,ielts:6.5},
     ]
   },
   {
-    id:13, name:'林国荣创意科技大学', name_en:'Limkokwing University', type:'private', qs:0, city:'赛博再也',
+    id:13, name:'林国荣创意科技大学', en:'Limkokwing University', type:'private', qs:0, city:'赛博再也',
     strengths:['设计','传媒','动画','建筑','时尚'], min_gpa:2.0, ielts_min:5.0,
     tuition_min:18000, tuition_max:35000, living_cost:25000, apply_months:2,
-    intake:['1月','5月','9月'], service_fee:10000,
-    desc:'创意和设计类专业全马领先，艺术类学生首选',
+    intake:[1,5,9], service_fee:10000,
+    desc:'全球创意教育领导者，在伦敦、巴厘岛等地设有分校，设计与艺术类专业全马领先。',
     programs:[
-      {name:'平面设计学士',level:'bachelor',cat:'艺术设计',dur:3,fee:75000,gpa:2.0,ielts:5.0,special:'需作品集'},
-      {name:'动画学士',level:'bachelor',cat:'艺术设计',dur:3,fee:80000,gpa:2.0,ielts:5.0,special:'需作品集'},
-      {name:'时尚设计学士',level:'bachelor',cat:'艺术设计',dur:3,fee:78000,gpa:2.0,ielts:5.0,special:'需作品集'},
-      {name:'建筑学学士',level:'bachelor',cat:'艺术设计',dur:3.5,fee:85000,gpa:2.3,ielts:5.0,special:'需作品集'},
+      {name:'平面设计学士',level:'bachelor',cat:'艺术设计',dur:3,fee:75000,gpa:2.0,ielts:5.0,special:'需提交作品集'},
+      {name:'动画学士',level:'bachelor',cat:'艺术设计',dur:3,fee:80000,gpa:2.0,ielts:5.0,special:'需提交作品集'},
+      {name:'时尚设计学士',level:'bachelor',cat:'艺术设计',dur:3,fee:78000,gpa:2.0,ielts:5.0,special:'需提交作品集'},
+      {name:'建筑学学士',level:'bachelor',cat:'艺术设计',dur:3.5,fee:85000,gpa:2.3,ielts:5.0,special:'需提交作品集'},
       {name:'多媒体创意硕士',level:'master',cat:'艺术设计',dur:1.5,fee:50000,gpa:2.5,ielts:5.5},
     ]
   },
   {
-    id:14, name:'世纪大学', name_en:'SEGi University', type:'private', qs:0, city:'吉隆坡',
+    id:14, name:'世纪大学', en:'SEGi University', type:'private', qs:0, city:'吉隆坡',
     strengths:['商科','工程','教育','医学','传媒'], min_gpa:2.0, ielts_min:5.0,
     tuition_min:15000, tuition_max:35000, living_cost:25000, apply_months:2,
-    intake:['1月','5月','9月'], service_fee:10000,
-    desc:'马来西亚最大私立大学之一，学费亲民，专业齐全',
+    intake:[1,5,9], service_fee:10000,
+    desc:'马来西亚规模最大的私立大学之一，与多所英美大学合作，学费亲民、专业齐全。',
     programs:[
       {name:'会计学学士',level:'bachelor',cat:'商科',dur:3,fee:70000,gpa:2.0,ielts:5.0},
-      {name:'早期教育学士',level:'bachelor',cat:'教育',dur:3,fee:65000,gpa:2.0,ielts:5.0},
+      {name:'早期幼儿教育学士',level:'bachelor',cat:'教育',dur:3,fee:65000,gpa:2.0,ielts:5.0},
       {name:'护理学学士',level:'bachelor',cat:'医学',dur:4,fee:95000,gpa:2.5,ielts:5.5},
-      {name:'MBA',level:'master',cat:'商科',dur:1,fee:50000,gpa:2.5,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1,fee:50000,gpa:2.5,ielts:6.0},
       {name:'教育学硕士',level:'master',cat:'教育',dur:1.5,fee:45000,gpa:2.5,ielts:5.5},
     ]
   },
   {
-    id:15, name:'马来西亚北方大学', name_en:'Universiti Utara Malaysia', type:'public', qs:451, city:'吉打',
+    id:15, name:'北方大学', en:'Universiti Utara Malaysia (UUM)', type:'public', qs:451, city:'吉打',
     strengths:['商科','管理','会计','金融','公共管理'], min_gpa:2.5, ielts_min:5.5,
     tuition_min:8000, tuition_max:18000, living_cost:18000, apply_months:3,
-    intake:['2月','9月'], service_fee:8000,
-    desc:'马来西亚管理类专业最强公立大学，学费低廉，性价比极高',
+    intake:[2,9], service_fee:8000,
+    desc:'马来西亚管理类最强公立大学，学费全马最低之一，适合预算有限但追求公立学历的学生。',
     programs:[
       {name:'会计学学士',level:'bachelor',cat:'商科',dur:4,fee:50000,gpa:2.5,ielts:5.5},
       {name:'金融学学士',level:'bachelor',cat:'商科',dur:4,fee:48000,gpa:2.5,ielts:5.5},
       {name:'人力资源管理学士',level:'bachelor',cat:'商科',dur:4,fee:45000,gpa:2.5,ielts:5.5},
-      {name:'MBA',level:'master',cat:'商科',dur:1.5,fee:32000,gpa:2.7,ielts:6.0},
+      {name:'工商管理硕士 (MBA)',level:'master',cat:'商科',dur:1.5,fee:32000,gpa:2.7,ielts:6.0},
       {name:'公共管理硕士',level:'master',cat:'社科',dur:1.5,fee:28000,gpa:2.7,ielts:6.0},
     ]
   },
 ];
 
-// ====== GPA 转换 ======
+// ====== GPA转换 ======
 function toGpa4(gpa) {
   if (gpa <= 4.0) return gpa;
   if (gpa >= 90) return 3.7;
@@ -576,59 +952,48 @@ function matchUniversities(student) {
   for (const uni of universities) {
     for (const prog of uni.programs) {
       if (prog.level !== targetLevel) continue;
-
       let score = 0, reasons = [], warnings = [];
 
-      // 专业
+      // 专业匹配
       if (targetMajor && targetMajor !== '不限') {
         if (prog.cat === targetMajor) { score += 30; reasons.push('专业方向完全匹配'); }
         else continue;
       } else { score += 15; }
 
       // GPA
-      const gpaReq = prog.gpa || uni.min_gpa || 2.5;
-      if (gpa4 >= gpaReq + 0.5) { score += 25; reasons.push('GPA远超要求'); }
-      else if (gpa4 >= gpaReq + 0.2) { score += 20; reasons.push('GPA高于要求'); }
-      else if (gpa4 >= gpaReq) { score += 15; reasons.push('GPA达标'); }
-      else if (gpa4 >= gpaReq - 0.3) { score += 5; warnings.push('GPA略低于要求，需额外材料补充'); }
-      else { score -= 10; warnings.push('GPA低于最低要求，录取难度大'); }
+      const gpaReq = prog.gpa || uni.min_gpa;
+      if (gpa4 >= gpaReq + 0.5) { score += 25; reasons.push('GPA远超录取线'); }
+      else if (gpa4 >= gpaReq + 0.2) { score += 20; reasons.push('GPA高于录取线'); }
+      else if (gpa4 >= gpaReq) { score += 15; reasons.push('GPA达到录取要求'); }
+      else if (gpa4 >= gpaReq - 0.3) { score += 5; warnings.push('GPA略低，建议补充科研/实习经历'); }
+      else { score -= 10; warnings.push('GPA低于最低要求，录取难度较大'); }
 
       // 语言
-      const ieltsReq = prog.ielts || uni.ielts_min || 5.5;
-      const ie = ielts || 0;
-      if (ie >= ieltsReq + 0.5) { score += 20; reasons.push('语言成绩优秀'); }
-      else if (ie >= ieltsReq) { score += 15; reasons.push('语言成绩达标'); }
-      else if (ie >= ieltsReq - 0.5 && ie > 0) { score += 5; warnings.push('语言成绩略低，可先读语言班'); }
-      else if (ie === 0) { score += 5; warnings.push('无语言成绩，需参加学校内测或先读语言班'); }
-      else { warnings.push('语言成绩较低，建议先读语言预科'); }
+      const ieltsReq = prog.ielts || uni.ielts_min;
+      if (ielts >= ieltsReq + 0.5) { score += 20; reasons.push('语言成绩优秀'); }
+      else if (ielts >= ieltsReq) { score += 15; reasons.push('语言成绩达标'); }
+      else if (ielts > 0 && ielts >= ieltsReq - 0.5) { score += 5; warnings.push('语言略低，可配语言班衔接'); }
+      else if (ielts === 0) { score += 5; warnings.push('暂无语言成绩，可参加校内英语测试或先读语言班'); }
+      else { warnings.push('语言成绩不足，建议先读语言预科'); }
 
-      // 费用
+      // 预算
       const totalCost = prog.fee + uni.living_cost * prog.dur + uni.service_fee;
-      const yearlyCost = Math.round((prog.fee / prog.dur) + uni.living_cost);
-      if (budget && budget > 0) {
+      const yearlyCost = Math.round(prog.fee / prog.dur + uni.living_cost);
+      if (budget > 0) {
         if (budget >= totalCost * 1.2) { score += 15; reasons.push('预算充裕'); }
         else if (budget >= totalCost) { score += 12; reasons.push('预算匹配'); }
-        else if (budget >= totalCost * 0.8) { score += 5; warnings.push('预算略紧张'); }
-        else { score -= 5; warnings.push('预算不足，建议考虑更经济的方案'); }
+        else if (budget >= totalCost * 0.8) { score += 5; warnings.push('预算略紧张，可申请奖学金'); }
+        else { score -= 5; warnings.push('超出预算，建议考虑更经济方案'); }
       } else { score += 8; }
 
       // 偏好
       if (preferences) {
-        if (preferences.includes('排名优先') && uni.qs > 0 && uni.qs <= 200) {
-          score += 10; reasons.push('QS世界排名第' + uni.qs + '位');
-        }
-        if (preferences.includes('性价比') && yearlyCost < 50000) {
-          score += 10; reasons.push('年度费用低于5万，性价比高');
-        }
-        if (preferences.includes('就业导向') && uni.type === 'private') {
-          score += 5; reasons.push('私立大学就业服务完善');
-        }
-        if (preferences.includes('学位认可') && uni.type === 'foreign_branch') {
-          score += 8; reasons.push('海外名校分校，学位国际认可');
-        }
-        if (preferences.includes('城市生活') && uni.city === '吉隆坡') {
-          score += 5; reasons.push('位于首都吉隆坡');
-        }
+        if (preferences.includes('排名优先') && uni.qs > 0 && uni.qs <= 200) { score += 10; reasons.push('QS世界排名第' + uni.qs + '位'); }
+        if (preferences.includes('性价比') && yearlyCost < 50000) { score += 10; reasons.push('年均费用低于5万，高性价比'); }
+        if (preferences.includes('就业导向') && uni.type === 'private') { score += 5; reasons.push('私立大学企业合作资源丰富'); }
+        if (preferences.includes('学位认可') && uni.type === 'foreign_branch') { score += 8; reasons.push('海外名校分校，学位全球认可'); }
+        if (preferences.includes('城市生活') && uni.city === '吉隆坡') { score += 5; reasons.push('位于首都吉隆坡'); }
+        if (preferences.includes('快速入学') && uni.intake.length >= 3) { score += 7; reasons.push('一年' + uni.intake.length + '次入学，灵活安排'); }
       }
 
       // 成功率
@@ -641,39 +1006,51 @@ function matchUniversities(student) {
       if (gpa4 < gpaReq - 0.3) rate = Math.max(5, Math.floor(rate * 0.3));
 
       results.push({
-        uni_name: uni.name, uni_name_en: uni.name_en,
-        uni_type: uni.type === 'public' ? '公立' : uni.type === 'private' ? '私立' : '海外分校',
-        qs: uni.qs || 0, city: uni.city,
-        program: prog.name,
-        level: prog.level === 'bachelor' ? '本科' : prog.level === 'master' ? '硕士' : '博士',
-        dur: prog.dur,
-        tuition: prog.fee,
-        living: uni.living_cost * prog.dur,
-        service_fee: uni.service_fee,
-        total: totalCost,
-        yearly: yearlyCost,
+        uni, prog,
+        uni_type: uni.type === 'public' ? '公立' : uni.type === 'private' ? '私立' : '海外名校分校',
+        totalCost, yearlyCost,
         ieltsReq, gpaReq,
-        special: prog.special || null,
         score, rate, reasons, warnings,
-        intake: uni.intake,
-        apply_months: uni.apply_months,
-        desc: uni.desc,
       });
     }
   }
-
   results.sort((a,b) => b.score - a.score);
   return { results: results.slice(0, 10), gpa4 };
 }
 
+// ====== 入学时间计算 ======
+const MONTH_NAMES = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+function calcIntakePlan(intakeMonths, applyMonths) {
+  const now = new Date();
+  const curMonth = now.getMonth() + 1;
+  const curYear = now.getFullYear();
+  const readyMonth = curMonth + applyMonths;
+
+  // 找最近可入学的月份
+  let bestMonth = null, bestYear = null;
+  for (let offset = 0; offset <= 1; offset++) {
+    for (const m of intakeMonths) {
+      const targetMonth = m;
+      const targetYear = curYear + offset;
+      const monthsUntil = (targetYear - curYear) * 12 + targetMonth - curMonth;
+      if (monthsUntil >= applyMonths) {
+        if (!bestMonth || monthsUntil < ((bestYear - curYear)*12 + bestMonth - curMonth)) {
+          bestMonth = targetMonth;
+          bestYear = targetYear;
+        }
+      }
+    }
+    if (bestMonth) break;
+  }
+  if (!bestMonth) { bestMonth = intakeMonths[0]; bestYear = curYear + 1; }
+
+  return { month: bestMonth, year: bestYear };
+}
+
 // ====== UI ======
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    t.classList.toggle('active', ['match','universities'][i] === name);
-  });
-  document.querySelectorAll('.panel').forEach((p, i) => {
-    p.classList.toggle('active', ['match','universities'][i] === name);
-  });
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', ['match','universities'][i] === name));
+  document.querySelectorAll('.panel').forEach((p, i) => p.classList.toggle('active', ['match','universities'][i] === name));
   if (name === 'universities') renderUniversities();
 }
 
@@ -696,127 +1073,261 @@ function handleMatch(e) {
 function renderResults(results, student, gpa4) {
   const area = document.getElementById('results-area');
   if (!results.length) {
-    area.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--gray-500)">暂无匹配结果，请调整条件后重试</div>';
+    area.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--gray-500)">暂未找到完全匹配的方案，请尝试调整专业方向或预算范围。</div>';
     return;
   }
-  const gpaNote = student.gpa > 4 ? `（百分制 ${student.gpa} → 4.0制 ${gpa4}）` : '';
-  let html = `<div class="results-header"><h2>为您找到 ${results.length} 个推荐方案</h2><span class="gpa-note">${gpaNote}</span></div>`;
+  const gpaNote = student.gpa > 4 ? `百分制 ${student.gpa} 分 → 4.0制 ${gpa4}` : '';
+  const levelLabel = student.targetLevel === 'bachelor' ? '本科' : student.targetLevel === 'master' ? '硕士' : '博士';
+
+  let html = `
+    <div class="results-banner">
+      <div>
+        <h2>专属留学方案 · 共 ${results.length} 个推荐</h2>
+        <div class="meta">目标: ${levelLabel} ${student.targetMajor !== '不限' ? '· ' + student.targetMajor : ''} ${gpaNote ? '· ' + gpaNote : ''}</div>
+      </div>
+    </div>
+  `;
 
   results.forEach((r, i) => {
-    const rc = i===0?'gold':i===1?'silver':i===2?'bronze':'';
-    const rateCls = r.rate>=70?'rate-high':r.rate>=40?'rate-mid':'rate-low';
-    const typeCls = r.uni_type==='公立'?'tag-public':r.uni_type==='私立'?'tag-private':'tag-branch';
-    const ni = findNextIntake(r.intake, r.apply_months);
+    const { uni, prog } = r;
+    const rankClass = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+    const rateClass = r.rate>=70?'rate-high':r.rate>=40?'rate-mid':'rate-low';
+    const typeClass = uni.type==='public'?'tag-public':uni.type==='private'?'tag-private':'tag-branch';
+    const intake = calcIntakePlan(uni.intake, uni.apply_months);
+
+    // 详细时间线
+    const now = new Date();
+    const curMonth = now.getMonth() + 1;
+    const curYear = now.getFullYear();
+    function addMonths(m, add) {
+      let nm = m + add;
+      let y = curYear;
+      while (nm > 12) { nm -= 12; y++; }
+      return y + '年' + nm + '月';
+    }
 
     html += `
       <div class="result-card">
-        <span class="rank-badge ${rc}">TOP ${i+1}</span>
-        <div class="card-top">
-          <div>
-            <h3>${r.uni_name} · ${r.program}</h3>
-            <span class="uni-en">${r.uni_name_en}</span>
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-rank ${rankClass}">推荐 #${i+1}</span>
+            <div class="card-uni-name">${uni.name}</div>
+            <div class="card-uni-en">${uni.en}</div>
+            <div class="card-program">${prog.name}</div>
+            <div class="card-tags">
+              <span class="tag ${typeClass}">${r.uni_type}</span>
+              ${uni.qs > 0 ? `<span class="tag tag-qs">QS #${uni.qs}</span>` : ''}
+              <span class="tag tag-city">${uni.city}</span>
+              <span class="tag tag-dur">${levelLabel} · ${prog.dur}年制</span>
+            </div>
           </div>
-          <div class="success-meter ${rateCls}">
-            <div class="circle">${r.rate}%</div>
-            <span class="label">成功率</span>
-          </div>
-        </div>
-        <div class="tags" style="margin-bottom:0.5rem">
-          <span class="tag ${typeCls}">${r.uni_type}</span>
-          ${r.qs > 0 ? `<span class="tag tag-qs">QS #${r.qs}</span>` : ''}
-          <span class="tag tag-city">${r.city}</span>
-          <span class="tag tag-city">${r.level} · ${r.dur}年</span>
-        </div>
-        <div class="card-details">
-          <div class="detail-item"><div class="dl">总学费</div><div class="dv">¥${r.tuition.toLocaleString()}</div></div>
-          <div class="detail-item"><div class="dl">生活费(总)</div><div class="dv">¥${r.living.toLocaleString()}</div></div>
-          <div class="detail-item"><div class="dl">服务费</div><div class="dv">¥${r.service_fee.toLocaleString()}</div></div>
-          <div class="detail-item"><div class="dl">总花费</div><div class="dv" style="color:var(--primary)">¥${r.total.toLocaleString()}</div></div>
-          <div class="detail-item"><div class="dl">GPA要求</div><div class="dv">${r.gpaReq}</div></div>
-          <div class="detail-item"><div class="dl">雅思要求</div><div class="dv">${r.ieltsReq}</div></div>
-        </div>
-        <div class="card-reasons">
-          ${r.reasons.map(x=>`<span class="reason reason-good">+ ${x}</span>`).join('')}
-          ${r.warnings.map(x=>`<span class="reason reason-warn">! ${x}</span>`).join('')}
-          ${r.special ? `<span class="reason reason-warn">要求: ${r.special}</span>` : ''}
-        </div>
-        <button class="expand-btn" onclick="toggleExpand(this)">查看详细时间规划 ▼</button>
-        <div class="card-expand">
-          <p style="font-size:0.9rem;color:var(--gray-700);margin-bottom:0.5rem">${r.desc}</p>
-          <strong style="font-size:0.85rem">入学时间：</strong><span style="font-size:0.85rem">${r.intake.join('、')}</span><br>
-          <strong style="font-size:0.85rem">申请周期：</strong><span style="font-size:0.85rem">约 ${r.apply_months} 个月</span>
-          <div class="timeline">
-            <div class="timeline-step"><span class="dot"></span><span class="step-time">即日起</span><span class="step-label">准备材料</span></div>
-            <div class="timeline-step"><span class="dot"></span><span class="step-time">1-2周</span><span class="step-label">递交申请</span></div>
-            <div class="timeline-step"><span class="dot"></span><span class="step-time">${r.apply_months-1}个月</span><span class="step-label">获得offer</span></div>
-            <div class="timeline-step"><span class="dot"></span><span class="step-time">${r.apply_months}个月</span><span class="step-label">办理签证</span></div>
-            <div class="timeline-step"><span class="dot"></span><span class="step-time">${ni}</span><span class="step-label">正式入学</span></div>
-          </div>
-          <div class="service-box">
-            <strong>服务包含：</strong>院校申请、材料翻译公证、offer跟进、签证办理、接机安排、入学注册协助
+          <div class="card-header-right">
+            <div class="rate-ring ${rateClass}">
+              <span class="pct">${r.rate}%</span>
+              <span class="pct-label">成功率</span>
+            </div>
+            <span class="rate-label">录取评估</span>
           </div>
         </div>
-      </div>`;
+
+        <div class="card-body">
+          <!-- 费用明细 -->
+          <table class="fee-table">
+            <tr>
+              <th>费用项目</th>
+              <th>马币 (MYR)</th>
+              <th>人民币参考</th>
+              <th>说明</th>
+            </tr>
+            <tr>
+              <td>学费总额</td>
+              <td class="fee-val">${fmtMYR(prog.fee)}</td>
+              <td class="fee-rmb">${fmtRMB(prog.fee)}</td>
+              <td>${prog.dur}年学制</td>
+            </tr>
+            <tr>
+              <td>生活费总额</td>
+              <td class="fee-val">${fmtMYR(uni.living_cost * prog.dur)}</td>
+              <td class="fee-rmb">${fmtRMB(uni.living_cost * prog.dur)}</td>
+              <td>含住宿、餐饮、交通</td>
+            </tr>
+            <tr>
+              <td>留学服务费</td>
+              <td class="fee-val">${fmtMYR(uni.service_fee)}</td>
+              <td class="fee-rmb">${fmtRMB(uni.service_fee)}</td>
+              <td>全程一站式服务</td>
+            </tr>
+            <tr class="total-row">
+              <td>预估总费用</td>
+              <td class="fee-val">${fmtMYR(r.totalCost)}</td>
+              <td>${fmtRMB(r.totalCost)}</td>
+              <td>年均 ${fmtMYR(r.yearlyCost)}</td>
+            </tr>
+          </table>
+
+          <!-- 录取要求 -->
+          <div class="req-grid">
+            <div class="req-item">
+              <div class="req-label">GPA 要求</div>
+              <div class="req-value">${r.gpaReq} / 4.0</div>
+              <div class="req-note">您的: ${gpa4} ${gpa4 >= r.gpaReq ? '✓ 达标' : '⚠ 不足'}</div>
+            </div>
+            <div class="req-item">
+              <div class="req-label">雅思要求</div>
+              <div class="req-value">IELTS ${r.ieltsReq}</div>
+              <div class="req-note">${student.ielts > 0 ? '您的: ' + student.ielts + (student.ielts >= r.ieltsReq ? ' ✓ 达标' : ' ⚠ 不足') : '暂无成绩，可校内测试'}</div>
+            </div>
+            <div class="req-item">
+              <div class="req-label">授课语言</div>
+              <div class="req-value">英文授课</div>
+              <div class="req-note">可配语言班衔接</div>
+            </div>
+            ${prog.special ? `<div class="req-item">
+              <div class="req-label">特殊要求</div>
+              <div class="req-value" style="font-size:0.85rem">${prog.special}</div>
+            </div>` : ''}
+          </div>
+
+          <!-- 匹配分析 -->
+          <div class="analysis">
+            <div class="analysis-title">匹配分析</div>
+            ${r.reasons.map(x => `<span class="pill pill-good">✓ ${x}</span>`).join('')}
+            ${r.warnings.map(x => `<span class="pill pill-warn">⚠ ${x}</span>`).join('')}
+          </div>
+        </div>
+
+        <button class="card-expand-btn" onclick="toggleDetail(this)">
+          展开详细时间规划与服务清单 ▾
+        </button>
+        <div class="card-detail">
+          <!-- 入学日历 -->
+          <div class="plan-section">
+            <h4>📅 ${intake.year}年入学日历</h4>
+            <div class="intake-calendar">
+              ${[1,2,3,4,5,6,7,8,9,10,11,12].map(m => {
+                const isIntake = uni.intake.includes(m);
+                const isRecommended = m === intake.month;
+                const cls = isRecommended ? 'recommended' : isIntake ? 'active' : '';
+                return `<div class="intake-month ${cls}">
+                  <span class="mo-label">${intake.year}</span>
+                  ${m}月
+                  ${isRecommended ? '<br>★推荐' : isIntake ? '<br>可入学' : ''}
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- 时间规划 -->
+          <div class="plan-section">
+            <h4>📋 申请时间规划</h4>
+            <div class="timeline-pro">
+              <div class="tl-step">
+                <div class="tl-time">第1阶段 · 即日起</div>
+                <div class="tl-title">材料准备</div>
+                <div class="tl-desc">成绩单、毕业证、护照、证件照、个人陈述等材料的准备与翻译公证</div>
+              </div>
+              <div class="tl-step">
+                <div class="tl-time">第2阶段 · 第2-3周</div>
+                <div class="tl-title">递交申请</div>
+                <div class="tl-desc">完成网申表格填写、上传材料、缴纳申请费</div>
+              </div>
+              <div class="tl-step">
+                <div class="tl-time">第3阶段 · 第${Math.max(1, uni.apply_months - 2)}-${uni.apply_months - 1}个月</div>
+                <div class="tl-title">等待审核 & 获得Offer</div>
+                <div class="tl-desc">学校审核申请材料，发放录取通知书 (Offer Letter)${prog.special ? '，' + prog.special : ''}</div>
+              </div>
+              <div class="tl-step">
+                <div class="tl-time">第4阶段 · 第${uni.apply_months}个月</div>
+                <div class="tl-title">签证与行前准备</div>
+                <div class="tl-desc">办理EMGS学生签证、购买机票、安排接机与住宿</div>
+              </div>
+              <div class="tl-step">
+                <div class="tl-time">🎯 ${intake.year}年${intake.month}月</div>
+                <div class="tl-title">正式入学</div>
+                <div class="tl-desc">抵达马来西亚，参加新生注册与迎新活动，开启留学生活</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 服务清单 -->
+          <div class="plan-section">
+            <h4>✅ 赴马教育全程服务清单</h4>
+            <div class="service-list">
+              <div class="service-item"><span class="service-check">✓</span>免费留学咨询与择校评估</div>
+              <div class="service-item"><span class="service-check">✓</span>申请材料清单指导</div>
+              <div class="service-item"><span class="service-check">✓</span>成绩单/学位证翻译公证</div>
+              <div class="service-item"><span class="service-check">✓</span>网申表格填写与提交</div>
+              <div class="service-item"><span class="service-check">✓</span>Offer跟进与确认</div>
+              <div class="service-item"><span class="service-check">✓</span>EMGS学生签证全程办理</div>
+              <div class="service-item"><span class="service-check">✓</span>体检指导与保险购买</div>
+              <div class="service-item"><span class="service-check">✓</span>机票预订建议</div>
+              <div class="service-item"><span class="service-check">✓</span>吉隆坡机场专车接机</div>
+              <div class="service-item"><span class="service-check">✓</span>校园住宿安排协助</div>
+              <div class="service-item"><span class="service-check">✓</span>入学注册全程陪同</div>
+              <div class="service-item"><span class="service-check">✓</span>在马生活指导(银行/电话卡等)</div>
+            </div>
+          </div>
+
+          <div style="padding:1rem;background:var(--accent-light);border-radius:8px;border:1px solid #e8dbb8;font-size:0.85rem;color:var(--gray-700)">
+            <strong style="color:var(--primary-dark)">💬 温馨提示：</strong>
+            以上费用为预估参考价，实际学费以院校最新收费标准为准。汇率按 1 MYR ≈ ${MYR_TO_RMB} RMB 换算。
+            如需了解奖学金申请、实习安排等详细信息，请联系您的专属顾问。
+          </div>
+        </div>
+      </div>
+    `;
   });
   area.innerHTML = html;
-  area.scrollIntoView({ behavior:'smooth', block:'start' });
+  area.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function findNextIntake(intakeMonths, applyMonths) {
-  const now = new Date();
-  const cur = now.getMonth() + 1;
-  const nums = intakeMonths.map(m => parseInt(m));
-  const ready = cur + applyMonths;
-  for (const m of nums) {
-    if (m >= (ready > 12 ? ready - 12 : ready)) {
-      const y = ready > 12 ? now.getFullYear() + 1 : now.getFullYear();
-      return y + '年' + m + '月';
-    }
-  }
-  return (now.getFullYear() + 1) + '年' + nums[0] + '月';
-}
-
-function toggleExpand(btn) {
-  const ex = btn.nextElementSibling;
-  ex.classList.toggle('show');
-  btn.textContent = ex.classList.contains('show') ? '收起详情 ▲' : '查看详细时间规划 ▼';
+function toggleDetail(btn) {
+  const detail = btn.nextElementSibling;
+  detail.classList.toggle('show');
+  btn.innerHTML = detail.classList.contains('show')
+    ? '收起详情 ▴'
+    : '展开详细时间规划与服务清单 ▾';
 }
 
 function renderUniversities() {
   const c = document.getElementById('uni-list');
   if (c.dataset.loaded) return;
   c.dataset.loaded = '1';
-  let html = '<div class="uni-cards">';
+
   const sorted = [...universities].sort((a,b) => {
     if (a.qs === 0 && b.qs === 0) return 0;
     if (a.qs === 0) return 1;
     if (b.qs === 0) return -1;
     return a.qs - b.qs;
   });
+
+  let html = '<div class="uni-grid">';
   for (const u of sorted) {
-    const typeCls = u.type==='public'?'tag-public':u.type==='private'?'tag-private':'tag-branch';
-    const typeLabel = u.type==='public'?'公立':u.type==='private'?'私立':'海外分校';
+    const typeClass = u.type==='public'?'tag-public':u.type==='private'?'tag-private':'tag-branch';
+    const typeLabel = u.type==='public'?'公立大学':u.type==='private'?'私立大学':'海外名校分校';
     html += `
       <div class="uni-card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="uni-card-head">
           <div>
             <h3>${u.name}</h3>
-            <div class="en">${u.name_en}</div>
+            <div class="en">${u.en}</div>
           </div>
-          <div class="tags" style="flex-shrink:0">
-            <span class="tag ${typeCls}">${typeLabel}</span>
+          <div class="card-tags" style="flex-shrink:0">
+            <span class="tag ${typeClass}">${typeLabel}</span>
             ${u.qs > 0 ? `<span class="tag tag-qs">QS #${u.qs}</span>` : ''}
           </div>
         </div>
-        <div class="info-row"><span class="lbl">城市</span><span>${u.city}</span></div>
-        <div class="info-row"><span class="lbl">年学费</span><span>¥${u.tuition_min.toLocaleString()} - ¥${u.tuition_max.toLocaleString()}</span></div>
-        <div class="info-row"><span class="lbl">年生活费</span><span>¥${u.living_cost.toLocaleString()}</span></div>
-        <div class="info-row"><span class="lbl">服务费</span><span>¥${u.service_fee.toLocaleString()}</span></div>
-        <div class="info-row"><span class="lbl">入学月</span><span>${u.intake.join('、')}</span></div>
-        <div class="info-row"><span class="lbl">最低GPA</span><span>${u.min_gpa}</span></div>
-        <div class="info-row"><span class="lbl">最低雅思</span><span>${u.ielts_min}</span></div>
-        <div class="strengths">${u.strengths.map(s=>`<span>${s}</span>`).join('')}</div>
-        <div class="desc">${u.desc}</div>
+        <div class="uni-card-body">
+          <div class="uni-info-row"><span class="lbl">所在城市</span><span class="val">${u.city}</span></div>
+          <div class="uni-info-row"><span class="lbl">年学费范围</span><span class="val">${fmtMYR(u.tuition_min)} - ${fmtMYR(u.tuition_max)}</span></div>
+          <div class="uni-info-row"><span class="lbl">年生活费约</span><span class="val">${fmtMYR(u.living_cost)}</span></div>
+          <div class="uni-info-row"><span class="lbl">服务费</span><span class="val">${fmtMYR(u.service_fee)}</span></div>
+          <div class="uni-info-row"><span class="lbl">入学月份</span><span class="val">${u.intake.map(m=>m+'月').join(' / ')}</span></div>
+          <div class="uni-info-row"><span class="lbl">最低GPA</span><span class="val">${u.min_gpa} / 4.0</span></div>
+          <div class="uni-info-row"><span class="lbl">最低雅思</span><span class="val">IELTS ${u.ielts_min}</span></div>
+          <div class="uni-strengths">${u.strengths.map(s=>`<span>${s}</span>`).join('')}</div>
+          <div class="uni-desc">${u.desc}</div>
+        </div>
       </div>`;
   }
   html += '</div>';
